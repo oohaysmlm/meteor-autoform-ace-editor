@@ -1,5 +1,17 @@
 AutoForm.addInputType('ace', {
 	template: 'afAce',
+	valueIn: function(val, atts) {
+	        if (atts.id) 
+	        {
+	          var editor = AceEditor.instance(atts.name);
+	          if (editor && editor.loaded == true) 
+	          {
+		          editor.setValue(val);
+	          }
+	        }
+	
+	        return val;
+	},
 	valueOut: function() {
 		var editor = AceEditor.instance(this.attr('id'));
 		return editor.getValue();
