@@ -15,7 +15,7 @@ meteor add aldeed:autoform
 In the root directory of your Meteor app, enter:
 
 ```cli
-meteor add bshamblen:autoform-ace
+meteor add vansonhk:autoform-ace
 ```
 
 ## Usage
