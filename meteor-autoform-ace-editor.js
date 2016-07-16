@@ -2,6 +2,15 @@ AutoForm.addInputType("ace-editor", {
     template: "afAceEditor",
     valueIn: function (val, atts) {
         _defaults.initialContent = val;
+
+        if (atts.id) {
+          var editor = AceEditor.instance(atts.name);
+          if (editor && editor.loaded === true) {
+              editor.$blockScrolling = Infinity;
+              editor.setValue(val);
+          }
+        }
+
         return val;
     },
     valueOut: function () {
