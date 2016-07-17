@@ -4,7 +4,9 @@ AutoForm.addInputType('ace', {
         if (atts.id) 
         {
           var editor = AceEditor.instance(atts.id);
-          editor.setValue(val);
+          if (editor) {
+	          editor.setValue(val);
+          }
         }
 
         return val;
