@@ -68,14 +68,16 @@ Template.afAce.onRendered(function() {
 	{
 		var words = static_words;
 
-		if (typeof(static_words) === 'function')
-		{
-			words = static_words();
-		}
-
 		staticWordsCompletor = {
 		    getCompletions: function(editor, session, pos, prefix, callback) {
+
 			var wordList = words;
+
+			if (typeof(words) === 'function')
+			{
+				wordList = words();
+			}
+
 			callback(null, wordList.map(function(word) {
 			    return {
 				caption: word,
@@ -104,36 +106,39 @@ Template.afAce.onRendered(function() {
 			mode:  mode
 		});
 
-		template.editor.setOptions({
-			enableBasicAutocompletion: basic_autocompletion,
-			enableLiveAutocompletion: live_autocompletion,
-		});
-		
-		if (staticWordsCompletor)
-		{
-			var langTools = window.ace.require("ace/ext/language_tools"); 
-			if (langTools)
-			{
-				langTools.addCompleter(staticWordsCompletor);
-			}
-			else
-			{
-				loadScript(window.ace.config.all().basePath+"ext-language_tools.js", function() {
-					var langTools = window.ace.require("ace/ext/language_tools"); 
-					if (langTools)
-					{
-						langTools.addCompleter(staticWordsCompletor);
-					}
-				});
-			}
-		}
-
 		if (!_.isUndefined(template.editor.loaded) && template.editor.loaded) {
 			e.stop();
 			template.editor.$blockScrolling = Infinity;
 
 			if (initialValue) {
 				template.editor.insert(initialValue);
+			}
+
+			if (staticWordsCompletor)
+			{
+				var langTools = window.ace.require("ace/ext/language_tools"); 
+				if (langTools)
+				{
+					langTools.addCompleter(staticWordsCompletor);
+					template.editor.setOptions({
+						enableBasicAutocompletion: basic_autocompletion,
+						enableLiveAutocompletion: live_autocompletion,
+					});
+				}
+				else
+				{
+					loadScript(window.ace.config.all().basePath+"ext-language_tools.js", function() {
+						var langTools = window.ace.require("ace/ext/language_tools"); 
+						if (langTools)
+						{
+							langTools.addCompleter(staticWordsCompletor);
+							template.editor.setOptions({
+								enableBasicAutocompletion: basic_autocompletion,
+								enableLiveAutocompletion: live_autocompletion,
+							});
+						}
+					});
+				}
 			}
 		}
 	});
