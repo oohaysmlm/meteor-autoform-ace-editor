@@ -22,6 +22,28 @@ Template.afAce.onRendered(function() {
 	var theme = template.data.atts['data-ace-theme'] || 'xcode';
 	var mode = template.data.atts['data-ace-mode'] || 'javascript';
 	var height = template.data.atts['data-ace-height'] || '300px';
+	var static_words = template.data.atts['data-ace-static-words'] || null;
+	
+	var staticWordsCompletor = null;
+	
+	if (static_words)
+	{
+		var staticWordsCompletor = {
+		    getCompletions: function(editor, session, pos, prefix, callback) {
+			var wordList = static_words,
+			callback(null, wordList.map(function(word) {
+			    return {
+				caption: word,
+				value: word,
+				meta: "static"
+			    };
+			}));
+
+		    }
+		}
+	}
+	
+	
 	var initialValue;
 
 	if (template.data && template.data.value && template.data.value.length > 0) {
@@ -36,6 +58,11 @@ Template.afAce.onRendered(function() {
 			theme: theme,
 			mode:  mode
 		});
+		
+		if (staticWordsCompletor)
+		{
+			template.editor.completors = [staticWordsCompletor];
+		}
 
 		if (!_.isUndefined(template.editor.loaded) && template.editor.loaded) {
 			e.stop();
