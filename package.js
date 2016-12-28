@@ -2,7 +2,7 @@ Package.describe({
 	name: 'vansonhk:autoform-ace',
 	summary: 'Ace editor for autoform.',
 	git: 'https://github.com/VansonLeung/autoform-ace.git',
-	version: '0.0.6'
+	version: '0.0.7'
 });
 
 Package.onUse(function(api) {

@@ -28,9 +28,16 @@ Template.afAce.onRendered(function() {
 	
 	if (static_words)
 	{
-		var staticWordsCompletor = {
+		var words = static_words;
+
+		if (typeof(static_words) === 'function')
+		{
+			words = static_words();
+		}
+
+		staticWordsCompletor = {
 		    getCompletions: function(editor, session, pos, prefix, callback) {
-			var wordList = static_words,
+			var wordList = words;
 			callback(null, wordList.map(function(word) {
 			    return {
 				caption: word,
