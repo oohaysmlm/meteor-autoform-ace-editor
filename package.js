@@ -1,22 +1,17 @@
 Package.describe({
-    name: 'vansonhk:meteor-autoform-ace-editor',
-    version: '0.0.5',
-    summary: 'Custom "ace editor" input type for AutoForm',
-    git: 'https://github.com/VansonLeung/meteor-autoform-ace-editor.git',
-    // By default, Meteor will default to using README.md for documentation.
-    // To avoid submitting documentation, set this field to null.
-    documentation: 'README.md'
+
+	name: 'vansonhk:autoform-ace',
+	summary: 'Ace editor for autoform.',
+	git: 'https://github.com/VansonLeung/autoform-ace.git',
+	version: '0.0.13'
 });
 
-Package.onUse(function (api) {
-    api.versionsFrom('1.2.1');
-    api.use('ecmascript');
-    api.use('templating@1.0.0');
-    api.use('blaze@2.0.0');
-    api.use('aldeed:autoform@5.0.0');
-    api.addFiles([
-        'meteor-autoform-ace-editor.html',
-        'meteor-autoform-ace-editor.css',
-        'meteor-autoform-ace-editor.js'
-    ], 'client');
+Package.onUse(function(api) {
+	api.versionsFrom('METEOR@1.0');
+	api.use('templating@1.0.0');
+	api.use('blaze@2.0.0');
+	api.use('aldeed:autoform@4.0.0 || 5.0.0');
+	api.use('arch:ace-editor@1.2.1', 'client');
+	api.addFiles('autoform-ace.html', 'client');
+	api.addFiles('autoform-ace.js', 'client');
 });
