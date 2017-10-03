@@ -1,6 +1,6 @@
 Package.describe({
     name: 'vansonhk:meteor-autoform-ace-editor',
-    version: '0.0.4',
+    version: '0.0.5',
     summary: 'Custom "ace editor" input type for AutoForm',
     git: 'https://github.com/VansonLeung/meteor-autoform-ace-editor.git',
     // By default, Meteor will default to using README.md for documentation.
