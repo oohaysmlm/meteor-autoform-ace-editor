@@ -1,3 +1,14 @@
 <template name="afAce">
-	<pre {{this.atts}}></pre>
+    <div>
+        {{#if languageCanBeChosen}}
+            <select class="form-control">
+                <option value="">Select Language</option>
+                {{#each languages}}
+                    <option value="{{lowerCase this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            <div style="height: 15px; width: 100%;"></div>
+        {{/if}}
+        <pre {{this.atts}}></pre>
+    </div>
 </template>
