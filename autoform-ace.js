@@ -2,10 +2,9 @@ AutoForm.addInputType('ace', {
     template: 'afAce',
     valueOut: function() {
         var editor = AceEditor.instance(this.attr('id'));
-        console.log(editor.session.$modeId.substr(9));
         return {
             code: editor.getValue(),
-			      language: editor.session.$modeId.substr(9)
+            language: editor.session.$modeId.substr(9)
     	  };
     }
 });
@@ -55,7 +54,7 @@ Template.afAce.onRendered(function() {
     var basic_autocompletion = template.data.atts['data-ace-basic-autocompletion'] || false;
     var live_autocompletion = template.data.atts['data-ace-live-autocompletion'] || false;
     var atts = template.data.atts;
-    let extraData = JSON.parse(this.data.atts['data-extra']);
+    var extraData = JSON.parse(this.data.atts['data-extra']);
 
     var staticWordsCompletor = null;
 
@@ -108,8 +107,8 @@ Template.afAce.onRendered(function() {
             template.editor.insert(initialValue);
           }
           else{
-            let extraData = JSON.parse(template.data.atts['data-extra']);
-            let initLang = extraData.languages[0];
+            var extraData = JSON.parse(template.data.atts['data-extra']);
+            var initLang = extraData.languages[0];
             editor.setValue(extraData.signatures[initLang]);
           }
 
@@ -196,7 +195,9 @@ Template.afAce.onRendered(function() {
 });
 
 Template.afAce.helpers({
-    lowerCase: s => s.toLowerCase(),
+    lowerCase: function (s) {
+        s.toLowerCase();
+    },
     languageCanBeChosen: function () {
     	if (this.atts === undefined) {
     		return false;
