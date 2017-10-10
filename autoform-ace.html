@@ -2,7 +2,6 @@
     <div>
         {{#if languageCanBeChosen}}
             <select class="form-control">
-                <option value="">Select Language</option>
                 {{#each languages}}
                     <option value="{{lowerCase this}}">{{this}}</option>
                 {{/each}}

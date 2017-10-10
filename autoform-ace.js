@@ -1,25 +1,12 @@
 AutoForm.addInputType('ace', {
     template: 'afAce',
-    valueIn: function(val, atts) {
-        if (atts.id)
-        {
-            var editor = AceEditor.instance(atts.id);
-            if (editor && (typeof editor === "object")) {
-                let extraData = JSON.parse(atts['data-extra']);
-                let initLang = extraData.languages[0];
-                editor.setValue(extraData.signatures[initLang]);
-            }
-        }
-
-        return val;
-    },
     valueOut: function() {
         var editor = AceEditor.instance(this.attr('id'));
         console.log(editor.session.$modeId.substr(9));
         return {
             code: editor.getValue(),
-			language: editor.session.$modeId.substr(9)
-    	};
+			      language: editor.session.$modeId.substr(9)
+    	  };
     }
 });
 
@@ -108,6 +95,55 @@ Template.afAce.onRendered(function() {
     template.editorId = template.$('pre').first().attr('id');
     template.$('#' + template.editorId).css('min-height', height);
 
+      AceEditor.instance(template.editorId, {
+        theme: theme,
+        mode:  mode
+      }, function(editor){
+        template.editor = editor;
+        //if (!_.isUndefined(template.editor.loaded) && template.editor.loaded) {
+          //e.stop();
+          template.editor.$blockScrolling = Infinity;
+
+          if (initialValue) {
+            template.editor.insert(initialValue);
+          }
+          else{
+            let extraData = JSON.parse(template.data.atts['data-extra']);
+            let initLang = extraData.languages[0];
+            editor.setValue(extraData.signatures[initLang]);
+          }
+
+          if (staticWordsCompletor)
+          {
+            var langTools = window.ace.require("ace/ext/language_tools");
+            if (langTools)
+            {
+              langTools.addCompleter(staticWordsCompletor);
+              template.editor.setOptions({
+                enableBasicAutocompletion: basic_autocompletion,
+                enableLiveAutocompletion: live_autocompletion,
+              });
+            }
+            else
+            {
+              loadScript(window.ace.config.all().basePath+"ext-language_tools.js", function() {
+                var langTools = window.ace.require("ace/ext/language_tools");
+                if (langTools)
+                {
+                  langTools.addCompleter(staticWordsCompletor);
+                  template.editor.setOptions({
+                    enableBasicAutocompletion: basic_autocompletion,
+                    enableLiveAutocompletion: live_autocompletion,
+                  });
+                }
+              });
+            }
+          }
+        //}
+
+
+      });
+    /*
     Tracker.autorun(function(e) {
         template.editor = AceEditor.instance(template.editorId, {
             theme: theme,
@@ -149,7 +185,7 @@ Template.afAce.onRendered(function() {
             }
         }
     });
-
+    */
     template.$('select').change(function (e) {
         template.editor = AceEditor.instance(template.editorId, {
             theme: theme,
