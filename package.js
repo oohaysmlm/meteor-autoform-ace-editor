@@ -1,6 +1,6 @@
 Package.describe({
 
-	name: 'vansonhk:autoform-ace',
+	name: 'skehoe:autoform-ace-multilang',
 	summary: 'Ace editor for autoform.',
 	git: 'https://github.com/VansonLeung/autoform-ace.git',
 	version: '0.0.13'

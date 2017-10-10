@@ -1,5 +1,5 @@
-AutoForm.addInputType('ace', {
-    template: 'afAce',
+AutoForm.addInputType('ace-multilang', {
+    template: 'afAceMultilang',
     valueOut: function() {
         var editor = AceEditor.instance(this.attr('id'));
         return {
@@ -45,7 +45,7 @@ var loadScript = function (script, successfulCB, failCB) {
     request.send();
 }
 
-Template.afAce.onRendered(function() {
+Template.afAceMultilang.onRendered(function() {
     var template = this;
     var theme = template.data.atts['data-ace-theme'] || 'xcode';
     var mode = template.data.atts['data-ace-mode'] || 'java';
@@ -188,13 +188,13 @@ Template.afAce.onRendered(function() {
     template.$('select').change(function (e) {
         template.editor = AceEditor.instance(template.editorId, {
             theme: theme,
-            mode:  e.target.value
+            mode:  e.target.value.toLowerCase()
         });
-        template.editor.setValue(extraData.signatures[e.target.value]);
+        template.editor.setValue(extraData.signatures[e.target.value.toLowerCase()]);
     });
 });
 
-Template.afAce.helpers({
+Template.afAceMultilang.helpers({
     lowerCase: function (s) {
         s.toLowerCase();
     },
