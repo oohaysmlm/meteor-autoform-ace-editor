@@ -109,7 +109,8 @@ Template.afAceMultilang.onRendered(function() {
           else{
             var extraData = JSON.parse(template.data.atts['data-extra']);
             var initLang = extraData.languages[0];
-            editor.setValue(extraData.signatures[initLang]);
+            editor.setValue(extraData.signatures[initLang], -1);
+            editor.clearSelection();
           }
 
           if (staticWordsCompletor)
@@ -190,7 +191,8 @@ Template.afAceMultilang.onRendered(function() {
             theme: theme,
             mode:  e.target.value.toLowerCase()
         });
-        template.editor.setValue(extraData.signatures[e.target.value.toLowerCase()]);
+        template.editor.setValue(extraData.signatures[e.target.value.toLowerCase()], -1);
+        template.editor.clearSelection();
     });
 });
 
