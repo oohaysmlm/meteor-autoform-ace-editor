@@ -3,7 +3,7 @@ Package.describe({
 	name: 'skehoe:autoform-ace-multilang',
 	summary: 'Ace editor for autoform.',
 	git: 'https://github.com/VansonLeung/autoform-ace.git',
-	version: '0.0.13'
+	version: '0.0.14'
 });
 
 Package.onUse(function(api) {
