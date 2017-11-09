@@ -54,7 +54,9 @@ Template.afAceMultilang.onRendered(function() {
     var basic_autocompletion = template.data.atts['data-ace-basic-autocompletion'] || false;
     var live_autocompletion = template.data.atts['data-ace-live-autocompletion'] || false;
     var atts = template.data.atts;
-    var extraData = JSON.parse(this.data.atts['data-extra']);
+    var extraData = JSON.parse(atts['data-extra']);
+
+    if (extraData.hasOwnProperty('defaultLanguage')) mode = extraData.defaultLanguage.toLowerCase();
 
     var staticWordsCompletor = null;
 
@@ -107,8 +109,14 @@ Template.afAceMultilang.onRendered(function() {
             template.editor.insert(initialValue);
           }
           else{
-            var extraData = JSON.parse(template.data.atts['data-extra']);
-            var initLang = extraData.languages[0];
+            var initLang;
+            if (extraData.hasOwnProperty('defaultLanguage')) {
+                initLang = extraData.defaultLanguage.toLowerCase();
+                template.$('select').val(extraData.defaultLanguage);
+            }
+            else {
+                initLang = extraData.languages[0];
+            }
             editor.setValue(extraData.signatures[initLang], -1);
             editor.clearSelection();
           }
