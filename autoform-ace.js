@@ -212,7 +212,12 @@ Template.afAceMultilang.helpers({
     	if (this.atts === undefined) {
     		return false;
 		}
-    	return this.atts.selectLanguage;
+		try {
+            return JSON.parse(this.atts['data-extra']).selectLanguage;
+        }
+        catch (e) {
+    	    return false;
+        }
 	},
     languages: function () {
         if (this.atts === undefined) return ['Java'];
